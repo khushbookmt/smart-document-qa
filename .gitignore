@@ -1,0 +1,18 @@
+# Environment variables
+.env
+
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Vector store data (regenerate hoti hai, repo mein zaroori nahi)
+data/
+
+# Sample PDF (agar copyright/personal hai to)
+# sample.pdf
+
+# OS
+.DS_Store
