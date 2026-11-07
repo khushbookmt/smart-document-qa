@@ -20,10 +20,19 @@ from utils.llm import generate_answer
 env_path = Path(__file__).parent / ".env"
 load_dotenv(env_path)
 
-client = genai.Client(
-    api_key=os.getenv("GOOGLE_API_KEY")
-)
+api_key = os.getenv("GOOGLE_API_KEY")
 
+if not api_key:
+    try:
+        api_key = st.secrets["GOOGLE_API_KEY"]
+    except Exception:
+        api_key = None
+
+if not api_key:
+    st.error("Google API key not found. Please configure GOOGLE_API_KEY.")
+    st.stop()
+
+client = genai.Client(api_key=api_key)
 # =====================================================
 # Page Config
 # =====================================================
