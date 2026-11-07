@@ -1,4 +1,9 @@
-def generate_answer(client,context,question):
+
+from google.genai import errors
+
+
+def generate_answer(client, context, question):
+
     prompt = f"""You are a helpful AI assistant.
 
 Answer the question ONLY from the provided context.
@@ -18,8 +23,24 @@ Question:
 
 Answer:
 """
-    response = client.models.generate_content(
-        model ='gemini-flash-latest',
-        contents = prompt)
 
-    return response.text
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.8-flash",
+            contents=prompt
+        )
+
+        return response.text or "I couldn't generate an answer. Please try again."
+
+    except errors.ServerError as e:
+
+        if getattr(e, "code", None) == 503:
+            return (
+                "Gemini is temporarily experiencing high demand. "
+                "Your PDF is safe. Please wait a minute and try your question again."
+            )
+
+        return f"Gemini server error: {e}"
+
+    except Exception as e:
+        return f"An error occurred while generating your answer: {e}"

@@ -29,12 +29,12 @@ client = genai.Client(
 # =====================================================
 
 st.set_page_config(
-    page_title="Ask to Zuzu",
+    page_title="Smart Document Q&A",
     page_icon="📚",
     layout="wide"
 )
 
-st.title("📚 Ask to Zuzu")
+st.title("📚 Smart Document Q&A")
 
 # =====================================================
 # Session State
